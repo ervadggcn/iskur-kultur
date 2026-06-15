@@ -1,0 +1,225 @@
+/* Uludağ Üniversitesi Bilgisayar Müh. sayfasına daha yakın MAVI tema */
+:root{
+  --uu-primary: #0055a5;      /* ana mavi */
+  --uu-primary-2: #003d73;    /* daha koyu mavi */
+  --uu-accent: #00a0e3;       /* vurgu mavisi */
+  --uu-ink: #1f2937;          /* koyu metin */
+  --uu-muted: #6b7280;        /* ikincil metin */
+  --uu-bg: #f6f7f9;           /* sayfa zemini */
+  --uu-card: #ffffff;
+  --uu-border: #e5e7eb;
+  --uu-shadow: 0 10px 30px rgba(17,24,39,.10);
+  --uu-radius: 14px;
+}
+
+html, body { height: 100%; }
+body{
+  background: var(--uu-bg);
+  color: var(--uu-ink);
+}
+
+/* Header */
+.uu-topbar{
+  background: #ffffff;
+  border-bottom: 1px solid var(--uu-border);
+  font-size: .875rem;
+}
+.uu-topbar a{ color: var(--uu-muted); text-decoration: none; }
+.uu-topbar a:hover{ color: var(--uu-primary); }
+
+.uu-navbar{
+  background: var(--uu-primary);
+  box-shadow: 0 8px 20px rgba(0,0,0,.14);
+}
+.uu-navbar .navbar-brand,
+.uu-navbar .nav-link{
+  color: #fff !important;
+}
+.uu-navbar .nav-link{ opacity: .95; }
+.uu-navbar .nav-link:hover{ opacity: 1; text-decoration: underline; text-underline-offset: 4px; }
+
+.uu-brandmark{
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0%, #ffffff 35%, #f2f2f2 100%);
+  display: grid;
+  place-items: center;
+  color: var(--uu-primary);
+  font-weight: 800;
+  letter-spacing: .02em;
+  border: 2px solid rgba(255,255,255,.35);
+}
+.uu-brand-title{
+  line-height: 1.15;
+}
+.uu-brand-title small{
+  display:block;
+  opacity:.85;
+  font-weight: 500;
+}
+
+main.uu-main{
+  padding-top: 12px;
+  padding-bottom: 40px;
+}
+
+/* Landing / bina seçimi */
+#bina_secim_ekrani{
+  min-height: calc(100vh - 112px);
+  display: flex;
+  align-items: center;
+  /* Arka plan: üstte mavi degrade + altta kampüs fotoğrafı (assets/uludag-kampus.jpg koyabilirsiniz) */
+  background:
+    linear-gradient(135deg, rgba(0,85,165,0.92) 0%, rgba(0,160,227,0.85) 45%, rgba(0,61,115,0.95) 100%),
+    url("./uludag-kampus.jpg") center center / cover no-repeat fixed;
+  color: #fff;
+}
+.uu-hero-card{
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: calc(var(--uu-radius) + 6px);
+  box-shadow: 0 18px 50px rgba(0,0,0,.25);
+  backdrop-filter: blur(6px);
+}
+
+.bina-kart{
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+  padding: 34px 22px;
+  text-align: center;
+  border-radius: var(--uu-radius);
+  background: #fff;
+  color: var(--uu-ink);
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,.0);
+}
+.bina-kart:hover{
+  transform: translateY(-3px);
+  box-shadow: var(--uu-shadow);
+  border-color: var(--uu-border);
+}
+.bina-kart .uu-icon{
+  font-size: 28px;
+  display:block;
+  margin-bottom: 10px;
+}
+
+/* App layout */
+#ana_sistem{ display: none; }
+
+.sidebar{
+  background: #ffffff;
+  border-right: 1px solid var(--uu-border);
+  min-height: calc(100vh - 112px);
+  padding: 20px;
+}
+.sidebar h3{ color: var(--uu-ink); }
+.sidebar label{ color: var(--uu-muted); font-weight: 600; font-size: .9rem; }
+
+.uu-panel{
+  background: var(--uu-card);
+  border: 1px solid var(--uu-border);
+  border-radius: var(--uu-radius);
+  box-shadow: var(--uu-shadow);
+}
+
+.nav-tabs .nav-link.active{
+  color: var(--uu-primary) !important;
+  border-color: var(--uu-border) var(--uu-border) #fff !important;
+}
+.nav-tabs .nav-link{
+  color: var(--uu-muted) !important;
+  font-weight: 700;
+}
+
+.btn-uu-primary{
+  background: var(--uu-primary);
+  border-color: var(--uu-primary);
+  color:#fff;
+  font-weight: 800;
+}
+.btn-uu-primary:hover{
+  background: var(--uu-primary-2);
+  border-color: var(--uu-primary-2);
+  color:#fff;
+}
+.btn-uu-outline{
+  border-color: var(--uu-primary);
+  color: var(--uu-primary);
+  font-weight: 700;
+}
+.btn-uu-outline:hover{
+  background: rgba(0,160,227,.10);
+}
+
+/* Footer */
+.uu-footer{
+  margin-top: 30px;
+  background: #ffffff;
+  border-top: 1px solid var(--uu-border);
+}
+.uu-footer .uu-footer-bar{
+  background: var(--uu-primary);
+  color:#fff;
+}
+.uu-footer a{ color: inherit; }
+
+@media (max-width: 767px){
+  #bina_secim_ekrani{ min-height: calc(100vh - 140px); }
+  .sidebar{ min-height: auto; border-right: 0; border-bottom: 1px solid var(--uu-border); }
+}
+
+/* --- FULLCALENDAR TEMA UYARLAMASI --- */
+
+/* 1. Takvim Ana Butonları (Bugün, İleri, Geri, Ay, Hafta) */
+.fc .fc-button-primary {
+    background-color: var(--uu-primary) !important;
+    border-color: var(--uu-primary) !important;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.fc .fc-button-primary:hover {
+    background-color: var(--uu-primary-2) !important;
+    border-color: var(--uu-primary-2) !important;
+}
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    background-color: var(--uu-primary-2) !important;
+    border-color: var(--uu-ink) !important;
+}
+
+/* 2. Takvim Çerçeve ve Izgara Çizgileri */
+.fc-theme-standard td, .fc-theme-standard th {
+    border-color: var(--uu-border) !important;
+}
+.fc-col-header-cell-cushion {
+    color: var(--uu-ink);
+    text-decoration: none;
+    font-weight: 700;
+    padding: 8px 0 !important;
+}
+.fc-timegrid-slot-label-cushion {
+    color: var(--uu-muted);
+    font-weight: 600;
+}
+
+/* 3. Randevu Bloklarının (Event) Görünümü */
+.fc-event {
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    padding: 2px 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+.fc-event:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* 4. Bugünün Rengi (Sarımtırak vurguyu kendi arka planımıza çekiyoruz) */
+.fc .fc-daygrid-day.fc-day-today,
+.fc .fc-timegrid-col.fc-day-today {
+    background-color: rgba(0, 160, 227, 0.05) !important; /* uu-accent renginin çok saydam hali */
+}

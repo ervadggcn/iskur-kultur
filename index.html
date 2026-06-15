@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>BUÜ Kültür Merkezi Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/theme.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/locales/tr.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="uu-topbar">
+        <div class="container py-2 d-flex flex-wrap gap-3 justify-content-between align-items-center">
+            <div class="d-flex flex-wrap gap-3 align-items-center">
+                <a href="#" class="text-nowrap"><i class="fa-solid fa-link"></i> Hızlı Bağlantılar</a>
+                <span class="text-muted d-none d-md-inline">|</span>
+                <a href="#" class="text-nowrap">Akademik Takvim</a>
+            </div>
+            <div class="d-flex gap-3 align-items-center">
+                <a href="#" class="text-nowrap">TR</a>
+                <a href="#" class="text-nowrap">EN</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg uu-navbar">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="#" onclick="location.reload()">
+                <img src="./assets/logo.png" alt="BUÜ Logo" style="width: 45px; height: 45px; object-fit: contain; background-color: white; border-radius: 50%; padding: 2px;">
+                <span class="uu-brand-title">
+                    Bursa Uludağ Üniversitesi
+                    <small>Kültür Merkezi Yönetim Paneli</small>
+                </span>
+            </a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#uuNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="uuNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="location.reload()"><i class="fa-solid fa-house"></i> Ana Sayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#iletisim"><i class="fa-solid fa-address-book"></i> İletişim</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="uu-main">
+<div id="bina_secim_ekrani">
+    <div class="container">
+        <div class="uu-hero-card p-4 p-md-5">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-5">
+                    <h1 class="fw-bold mb-3">Salon Yönetimi</h1>
+                    <p class="mb-0 opacity-75 fs-5">
+                        İşlem yapmak istediğiniz yerleşkeyi seçiniz.
+                    </p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="bina-kart" onclick="sistemiAc('Merkez Yerleşke')">
+                                <i class="fa-solid fa-building-columns fa-3x mb-3" style="color: var(--uu-primary)"></i>
+                                <h5 class="fw-bold mb-0">Merkez Yerleşke</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="bina-kart" style="cursor: not-allowed;" title="Bu yerleşke için sistem henüz aktif değil">
+                                <i class="fa-solid fa-layer-group fa-3x mb-3" style="color: var(--uu-primary)"></i>
+                                <h5 class="fw-bold mb-0">Diğer Yerleşkeler</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ana_sistem" class="container-fluid" style="max-width: 1600px; display: none;">
+    <div class="row g-4">
+
+        <div class="col-lg-3 sidebar rounded-3 shadow-sm">
+            <button class="btn btn-uu-outline btn-sm mb-4 w-100" onclick="location.reload()">
+                <i class="fa-solid fa-arrow-left"></i> Binalara Dön
+            </button>
+            <h4 id="secili_bina_baslik" class="fw-bold text-primary mb-3">Bina</h4>
+            <hr>
+
+            <div class="mb-3">
+                <label><i class="fa-solid fa-door-open"></i> Salon Seçimi</label>
+                <select id="oda_adi" class="form-select border-primary" onchange="verileriGetir()">
+                    <option value="Mete Cengiz Salonu">Mete Cengiz Salonu</option>
+                    <option value="Kırmızı Salon">Kırmızı Salon</option>
+                    <option value="Mavi Salon">Mavi Salon</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label><i class="fa-solid fa-users"></i> Başvuru Tipi</label>
+                <select id="basvuru_tipi" class="form-select">
+                    <option value="Kişi">Kişi</option>
+                    <option value="Kurum">Kurum / Öğrenci Topluluğu</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label><i class="fa-solid fa-signature"></i> Topluluk/Kişi Adı</label>
+                <input type="text" id="topluluk_adi" class="form-control" placeholder="Örn: Müzik Topluluğu">
+            </div>
+
+            <div class="mb-3">
+                <label><i class="fa-regular fa-calendar-days"></i> Tarih</label>
+                <input type="date" id="tarih" class="form-control bg-light" readonly>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col">
+                    <label>Başlangıç</label>
+                    <select id="s_bas" class="form-select">
+                        <option value="08:00">08:00</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="21:00">21:00</option>
+                        <option value="22:00">22:00</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label>Bitiş</label>
+                    <select id="s_bit" class="form-select">
+                        <option value="08:00">08:00</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:00">18:00</option>
+                        <option value="19:00">19:00</option>
+                        <option value="20:00">20:00</option>
+                        <option value="21:00">21:00</option>
+                        <option value="22:00">22:00</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label><i class="fa-solid fa-comment-dots"></i> Talep Notu (Opsiyonel)</label>
+                <textarea id="talep_not" class="form-control" rows="2" placeholder="Varsa ek istekler veya iletişim bilgisi..."></textarea>
+            </div>
+
+            <button onclick="randevuOlustur()" class="btn btn-uu-primary w-100 py-2 fs-5">
+                <i class="fa-solid fa-floppy-disk"></i> KAYDET
+            </button>
+
+            <div class="alert alert-info mt-3 small">
+                <i class="fa-solid fa-circle-info"></i> <strong>İpucu:</strong> Takvimde fareyle basılı tutup sürükleyerek blokları seçebilir veya saatleri yukarıdaki menüden elle ayarlayabilirsiniz.
+            </div>
+        </div>
+
+        <div class="col-lg-9 p-lg-4 p-2">
+            <div class="uu-panel p-3 bg-white h-100" style="min-height: 80vh;">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DÜZENLEME VE SİLME İÇİN MODAL PENCERESİ -->
+<div class="modal fade" id="randevuModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Randevu Düzenle / Sil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="modal_id">
+        <div class="mb-3">
+            <label>Topluluk/Kişi Adı</label>
+            <input type="text" id="modal_adi" class="form-control">
+        </div>
+        <div class="row g-2 mb-3">
+            <div class="col">
+                <label>Başlangıç</label>
+                <select id="modal_s_bas" class="form-select">
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>Bitiş</label>
+                <select id="modal_s_bit" class="form-select">
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="12:00">12:00</option>
+                    <option value="13:00">13:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                    <option value="21:00">21:00</option>
+                    <option value="22:00">22:00</option>
+                </select>
+            </div>
+        </div>
+        <!-- YENİ EKLENEN TALEP NOTU KISMI -->
+        <div class="mb-3">
+            <label>Talep Notu (Opsiyonel)</label>
+            <textarea id="modal_talep_not" class="form-control" rows="2" placeholder="Varsa ek istekler..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" onclick="randevuSil()">Sil</button>
+        <button type="button" class="btn btn-primary" onclick="randevuGuncelle()">Değişiklikleri Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="uu-footer" id="iletisim">
+    <div class="container py-4 text-center">
+        <div class="text-muted small">© 2026 Bursa Uludağ Üniversitesi Kültür Merkezi Yönetimi</div>
+    </div>
+</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let seciliBina = "";
+    let tumRandevular = [];
+    let calendar;
+
+    const BASE_URL = "http://127.0.0.1:8000";
+
+    function sistemiAc(bina) {
+        seciliBina = bina;
+        document.getElementById('secili_bina_baslik').innerText = bina;
+        document.getElementById('bina_secim_ekrani').style.display = 'none';
+        document.getElementById('ana_sistem').style.display = 'block';
+
+        takvimiBaslat();
+        verileriGetir();
+    }
+
+    function takvimiBaslat() {
+        let calendarEl = document.getElementById('calendar');
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'tr',
+
+            firstDay: 1,
+
+            buttonText: {
+                today: 'Bugün',
+                month: 'Ay',
+                week: 'Hafta',
+                day: 'Gün'
+            },
+            initialView: 'timeGridWeek',
+            // Sağ üst menüye "dayGridMonth" (Aylık görünüm) geri eklendi
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+
+            expandRows: true,
+            height: '100%',
+
+            slotDuration: '01:00:00',
+            slotLabelInterval: '01:00',
+            slotLabelFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                omitZeroMinute: false,
+                hour12: false
+            },
+
+            slotMinTime: '08:00:00',
+            slotMaxTime: '22:00:00',
+            allDaySlot: false,
+            selectable: true,
+
+            select: function(info) {
+                let startISO = info.startStr;
+                let endISO = info.endStr;
+
+                document.getElementById('tarih').value = startISO.substring(0, 10);
+
+                // Sağ taraftan sürükleyerek seçince sol taraftaki Select kutuları da otomatik değişir
+                document.getElementById('s_bas').value = startISO.substring(11, 16);
+                document.getElementById('s_bit').value = endISO.substring(11, 16);
+            },
+
+            eventClick: function(info) {
+                // Modalın içini doldur
+                document.getElementById('modal_id').value = info.event.id;
+                document.getElementById('modal_adi').value = info.event.title.replace(" (Notlu)", "");
+
+                // Seçili randevunun saatlerini, tarihini VE NOTUNU çek
+                document.getElementById('tarih').value = info.event.startStr.substring(0, 10);
+                document.getElementById('modal_s_bas').value = info.event.startStr.substring(11, 16);
+                document.getElementById('modal_s_bit').value = info.event.endStr.substring(11, 16);
+
+                // Takvime kaydettiğimiz extendedProps içinden notu alıp kutuya basıyoruz
+                document.getElementById('modal_talep_not').value = info.event.extendedProps.talep_not || "";
+
+                // Modalı aç
+                var myModal = new bootstrap.Modal(document.getElementById('randevuModal'));
+                myModal.show();
+            },
+        });
+        calendar.render();
+    }
+
+    async function verileriGetir() {
+        if (!seciliBina) return;
+
+        const seciliOda = document.getElementById('oda_adi').value;
+        const endpoint = `${BASE_URL}/api/randevular/${encodeURIComponent(seciliBina)}`;
+
+        try {
+            const res = await fetch(endpoint);
+            const data = await res.json();
+
+            tumRandevular = data.filter(r => r.oda_adi === seciliOda);
+            calendar.removeAllEvents();
+
+            tumRandevular.forEach(r => {
+                calendar.addEvent({
+                    id: r.id,
+                    title: r.topluluk_kisi_adi + (r.talep_not ? " (Notlu)" : ""),
+                    start: `${r.tarih}T${r.saat_baslangic}:00`,
+                    end: `${r.tarih}T${r.saat_bitis}:00`,
+                    color: '#dc2626',
+                    textColor: '#ffffff',
+                    // GÜNCELLEME: Modalda notu görebilmek için buraya notu ekliyoruz
+                    extendedProps: {
+                        talep_not: r.talep_not
+                    }
+                });
+            });
+
+        } catch (e) {
+            console.error("Veri çekme hatası:", e);
+        }
+    }
+
+    async function randevuOlustur() {
+        const payload = {
+            bina_adi: seciliBina,
+            oda_adi: document.getElementById('oda_adi').value,
+            basvuru_tipi: document.getElementById('basvuru_tipi').value,
+            topluluk_kisi_adi: document.getElementById('topluluk_adi').value,
+            tarih: document.getElementById('tarih').value,
+            saat_baslangic: document.getElementById('s_bas').value,
+            saat_bitis: document.getElementById('s_bit').value,
+            talep_not: document.getElementById('talep_not').value || null
+        };
+
+        if (!payload.topluluk_kisi_adi || !payload.tarih || !payload.saat_baslangic) {
+            return alert("Lütfen Topluluk Adı ve Takvimden Saat Seçimi alanlarını boş bırakmayın!");
+        }
+
+        try {
+            const res = await fetch(`${BASE_URL}/api/randevu`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert("Randevu başarıyla kaydedildi!");
+                verileriGetir();
+                document.getElementById('topluluk_adi').value = "";
+                document.getElementById('talep_not').value = "";
+            } else {
+                const err = await res.json();
+                alert(err.detail ? JSON.stringify(err.detail) : "Bir hata oluştu.");
+            }
+        } catch (e) {
+            console.error("Kayıt hatası:", e);
+            alert("Sunucuya ulaşılamadı. FastAPI'nin açık olduğundan emin olun.");
+        }
+    }
+
+    async function randevuGuncelle() {
+        const id = document.getElementById('modal_id').value;
+        const payload = {
+            bina_adi: seciliBina,
+            oda_adi: document.getElementById('oda_adi').value,
+            basvuru_tipi: document.getElementById('basvuru_tipi').value,
+            topluluk_kisi_adi: document.getElementById('modal_adi').value,
+            tarih: document.getElementById('tarih').value,
+            saat_baslangic: document.getElementById('modal_s_bas').value,
+            saat_bitis: document.getElementById('modal_s_bit').value,
+            talep_not: document.getElementById('modal_talep_not').value || null  // Yeni eklenen not kısmı
+        };
+
+        try {
+            const res = await fetch(`${BASE_URL}/api/randevu/${id}`, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+
+            if (res.ok) {
+                alert("Randevu başarıyla güncellendi!");
+                // Modalı kapat
+                var modalEl = document.getElementById('randevuModal');
+                var modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
+                verileriGetir();
+            } else {
+                const err = await res.json();
+                alert(err.detail ? JSON.stringify(err.detail) : "Bir hata oluştu.");
+            }
+        } catch (e) {
+            console.error("Güncelleme hatası:", e);
+            alert("Sunucuya ulaşılamadı.");
+        }
+    }
+
+    async function randevuSil() {
+        const id = document.getElementById('modal_id').value;
+        if(confirm("Silmek istediğinize emin misiniz?")) {
+            try {
+                const res = await fetch(`${BASE_URL}/api/randevu/${id}`, {
+                    method: 'DELETE'
+                });
+                if (res.ok) {
+                    alert("Randevu silindi.");
+                    // Modalı kapat
+                    var modalEl = document.getElementById('randevuModal');
+                    var modal = bootstrap.Modal.getInstance(modalEl);
+                    modal.hide();
+                    verileriGetir();
+                } else {
+                    alert("Silme işlemi başarısız oldu.");
+                }
+            } catch (e) {
+                console.error("Silme hatası:", e);
+                alert("Sunucuya ulaşılamadı.");
+            }
+        }
+    }
+</script>
+</body>
+</html>
