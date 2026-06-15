@@ -162,12 +162,3 @@ Sistem arka planda aşağıdaki RESTful API uç noktaları ile haberleşir:
 * `PUT /api/randevu/{randevu_id}` : Mevcut bir randevunun bilgilerini (saat, not, başvuran vb.) günceller.
 * `DELETE /api/randevu/{randevu_id}` : Seçilen randevuyu veritabanından kalıcı olarak siler.
 
----
-
-*Bu sistem, salon tahsis süreçlerini dijitalleştirmek, hızlandırmak ve insan kaynaklı planlama hatalarını sıfıra indirmek amacıyla tasarlanmıştır.*
-
-```
-
-Bu döküman projeyi inceleyecek kişilere sistemin ne kadar ayakları yere basan, bütünsel ve profesyonel bir mimariyle yazıldığını net bir şekilde gösterecektir. Eklemek veya değiştirmek istediğin spesifik bir başlık varsa hemen uyarlayabilirim!
-
-```
